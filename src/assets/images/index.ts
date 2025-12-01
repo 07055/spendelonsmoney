@@ -1,4 +1,4 @@
-// src/assets/images/index.ts
+// import images from images folder
 import apartments from "./apartments.jpg";
 import bull from "./bull.jpg";
 import cows from "./cows.jpg";
