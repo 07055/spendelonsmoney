@@ -46,68 +46,62 @@ const Items = [
 
 
 
+
+
 const ItemsList = () => {
-  const [count, setCount] = useState(455_991_870_000);
+  const [balance, setBalance] = useState(455_991_870_000);
   const [spent, setSpent] = useState(0);
   const [cart, setCart] = useState<number>(0);
 
   function buyItems(price: number) {
-    setCount((prev) => prev - price);
+    setBalance((prev) => prev - price);
     setSpent((prev) => prev + price);
     setCart((prev) => prev + 1);
   }
 
   function sellItems(price: number) {
-    setCount((prev) => prev + price);
+    setBalance((prev) => prev + price);
     setSpent((prev) => prev - price);
     setCart((prev) => Math.max(prev - 1, 0));
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      
-      {/* Navbar */}
-      <nav className="bg-white shadow-md py-4 px-6 flex justify-between items-center sticky top-0 z-10">
-        <h1 className="text-2xl font-bold text-gray-800">Luxury Store</h1>
-        <p className="text-lg font-medium text-gray-700">
-          Balance: <span className="text-green-600 font-bold">${count.toLocaleString()}</span>
-        </p>
+    <div className="min-h-screen bg-gray-100">
+
+      {/* Navigation Bar */}
+      <nav className="bg-white shadow-md py-4 px-6 flex flex-col md:flex-row justify-between items-center sticky top-0 z-10">
+        <h1 className="text-2xl font-bold text-gray-800 mb-2 md:mb-0">Luxury Store</h1>
+        <div className="flex flex-col md:flex-row gap-4 text-gray-700">
+          <p>Balance: <span className="text-green-600 font-bold">${balance.toLocaleString()}</span></p>
+          <p>Items Bought: <span className="font-bold">{cart}</span></p>
+          <p>Money Spent: <span className="text-red-600 font-bold">${spent.toLocaleString()}</span></p>
+        </div>
       </nav>
 
-      {/* Cart Summary */}
-      <div className="max-w-6xl mx-auto mt-6 bg-white shadow-md p-4 rounded-xl">
-        <h2 className="text-xl font-semibold text-gray-800 mb-2">Cart Summary</h2>
-        <div className="flex flex-col sm:flex-row justify-between gap-2">
-          <p className="text-gray-700">Items Bought: <span className="font-bold">{cart}</span></p>
-          <p className="text-gray-700">Money Spent: <span className="font-bold text-red-600">${spent.toLocaleString()}</span></p>
-          <p className="text-gray-700">Remaining Balance: <span className="font-bold text-green-600">${count.toLocaleString()}</span></p>
-        </div>
-      </div>
-
-      {/* Items Cards Grid */}
-      <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {Items.map((Product) => (
+      {/* Items Grid (Shopping List Cards) */}
+      <div className="max-w-1xl mx-auto mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+        {Items.map((item) => (
           <div
-            key={Product.id}
-            className="bg-white shadow-md rounded-lg overflow-hidden border hover:shadow-xl transition flex flex-col"
+            key={item.id}
+            className="bg-white rounded-lg shadow-md hover:shadow-xl transition flex flex-col border overflow-hidden"
           >
             <img
-              src={Product.image}
-              alt={Product.item}
+              src={item.image}
+              alt={item.item}
               className="w-full h-40 object-cover"
             />
             <div className="p-4 flex flex-col flex-grow">
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">{Product.item}</h3>
-              <p className="text-gray-700 mb-4">Price: <span className="font-bold text-black">${Product.price.toLocaleString()}</span></p>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">{item.item}</h3>
+              <p className="text-gray-700 mb-4">Price: <span className="font-bold text-black">${item.price.toLocaleString()}</span></p>
               <div className="mt-auto flex gap-2">
                 <button
-                  onClick={() => sellItems(Product.price)}
+                  onClick={() => sellItems(item.price)}
                   className="flex-1 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
                 >
                   Sell
                 </button>
                 <button
-                  onClick={() => buyItems(Product.price)}
+                  onClick={() => buyItems(item.price)}
                   className="flex-1 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
                 >
                   Buy
